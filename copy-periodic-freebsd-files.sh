@@ -46,8 +46,11 @@ cp $FREEBSD_SOURCE/usr.sbin/periodic/periodic.sh $DEST/
 
 # all check scripts
 #
-echo "copy etc/periodic/ files"
-cp -r $FREEBSD_SOURCE/etc/periodic/ $DEST/
+echo "copy etc/periodic/ $DEST/scripts"
+if [ ! -d $DEST/scripts ]; then
+	mkdir $DEST/scripts
+fi
+cp -r $FREEBSD_SOURCE/etc/periodic/ $DEST/scripts/
 
 echo "remove Makefile stuff"
 find $DEST -name "Makefile*" -delete -print
@@ -55,7 +58,10 @@ find $DEST -name "Makefile*" -delete -print
 # man pages
 #
 echo "copy usr.sbin/periodic/periodic.8"
-cp $FREEBSD_SOURCE/usr.sbin/periodic/periodic.8 $DEST/
+if [ ! -d $DEST/man ]; then
+	mkdir $DEST/man
+fi
+cp $FREEBSD_SOURCE/usr.sbin/periodic/periodic.8 $DEST/man/
 
 echo "copy share/man/man5/periodic.conf.5"
-cp $FREEBSD_SOURCE/share/man/man5/periodic.conf.5 $DEST/
+cp $FREEBSD_SOURCE/share/man/man5/periodic.conf.5 $DEST/man/
