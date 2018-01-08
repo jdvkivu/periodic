@@ -27,12 +27,15 @@
 
 
 FREEBSD_SOURCE=../freebsd
-DEST=files
+DEST=package/periodic-11.1
 
-if [ ! -d $DEST ]; then
-	echo "create $DEST directory"
-	mkdir $DEST
-fi
+ensure_dir_present() {
+	if [ ! -d $1 ]; then
+		echo "create $ directory"
+		mkdir $1
+	fi
+}
+
 
 # conf file
 #
@@ -42,14 +45,12 @@ cp $FREEBSD_SOURCE/etc/defaults/periodic.conf $DEST/
 # main script
 #
 echo "copy usr.sbin/periodic/periodic.sh"
-cp $FREEBSD_SOURCE/usr.sbin/periodic/periodic.sh $DEST/
+cp $FREEBSD_SOURCE/usr.sbin/periodic/periodic.sh $DEST/periodic
 
 # all check scripts
 #
 echo "copy etc/periodic/ $DEST/scripts"
-if [ ! -d $DEST/scripts ]; then
-	mkdir $DEST/scripts
-fi
+ensure_dir_present $DEST/scripts
 cp -r $FREEBSD_SOURCE/etc/periodic/ $DEST/scripts/
 
 echo "remove Makefile stuff"
@@ -58,9 +59,7 @@ find $DEST -name "Makefile*" -delete -print
 # man pages
 #
 echo "copy usr.sbin/periodic/periodic.8"
-if [ ! -d $DEST/man ]; then
-	mkdir $DEST/man
-fi
+ensure_dir_present $DEST/man
 cp $FREEBSD_SOURCE/usr.sbin/periodic/periodic.8 $DEST/man/
 
 echo "copy share/man/man5/periodic.conf.5"
