@@ -1,0 +1,27 @@
+diff --git a/package/periodic-11.1/scripts/daily/110.clean-tmps b/package/periodic-11.1/scripts/daily/110.clean-tmps
+index 67bcec6..2bc20b6 100755
+--- a/package/periodic-11.1/scripts/daily/110.clean-tmps
++++ b/package/periodic-11.1/scripts/daily/110.clean-tmps
+@@ -8,9 +8,9 @@
+ 
+ # If there is a global system configuration file, suck it in.
+ #
+-if [ -r /etc/defaults/periodic.conf ]
++if [ -r /etc/default/periodic.conf ]
+ then
+-    . /etc/defaults/periodic.conf
++    . /etc/default/periodic.conf
+     source_periodic_confs
+ fi
+ 
+@@ -45,8 +45,8 @@ case "$daily_clean_tmps_enable" in
+ 	    rc=$(for dir in $daily_clean_tmps_dirs
+ 		do
+ 		    [ ."${dir#/}" != ."$dir" -a -d $dir ] && cd $dir && {
+-			find -x -d . -type f $args -delete $print
+-			find -x -d . ! -name . -type d $dargs -delete $print
++			find . -mount -d -type f $args -delete $print
++			find . -mount -d ! -name . -type d $dargs -delete $print
+ 		    } | sed "s,^\\.,  $dir,"
+ 		done | tee /dev/stderr | wc -l)
+ 	    [ -z "$print" ] && rc=0
