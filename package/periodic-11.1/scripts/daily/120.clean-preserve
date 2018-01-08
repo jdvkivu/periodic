@@ -7,9 +7,9 @@
 
 # If there is a global system configuration file, suck it in.
 #
-if [ -r /etc/defaults/periodic.conf ]
+if [ -r /etc/default/periodic.conf ]
 then
-    . /etc/defaults/periodic.conf
+    . /etc/default/periodic.conf
     source_periodic_confs
 fi
 
