@@ -1,0 +1,32 @@
+diff --git a/package/periodic-11.1/periodic b/package/periodic-11.1/periodic
+index bef87f8..9ff3433 100644
+--- a/package/periodic-11.1/periodic
++++ b/package/periodic-11.1/periodic
+@@ -32,8 +32,8 @@ fi
+ 
+ # If possible, check the global system configuration file, 
+ # to see if there are additional dirs to check
+-if [ -r /etc/defaults/periodic.conf ]; then
+-    . /etc/defaults/periodic.conf
++if [ -r /etc/default/periodic.conf ]; then
++    . /etc/default/periodic.conf
+     source_periodic_confs
+ fi
+ 
+@@ -49,7 +49,7 @@ if [ $1 != "LOCKED" ]; then
+     ret=0
+     for arg; do
+         lockfile=/var/run/periodic.${arg##*/}.lock
+-        lockf -t 0 "${lockfile}" /bin/sh $0 LOCKED "$arg"
++        lockfile-create -r 0 -l "${lockfile}" && /bin/sh $0 LOCKED "$arg"
+         case $? in
+         0) ;;
+         73) #EX_CANTCREATE
+@@ -66,6 +66,7 @@ if [ $1 != "LOCKED" ]; then
+             ret=1
+             ;;
+         esac
++        lockfile-remove -l "${lockfile}"
+     done
+     exit $ret
+ fi
