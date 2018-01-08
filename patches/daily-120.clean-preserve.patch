@@ -1,0 +1,16 @@
+diff --git a/package/periodic-11.1/scripts/daily/120.clean-preserve b/package/periodic-11.1/scripts/daily/120.clean-preserve
+index d5b34a1..99a7b85 100755
+--- a/package/periodic-11.1/scripts/daily/120.clean-preserve
++++ b/package/periodic-11.1/scripts/daily/120.clean-preserve
+@@ -7,9 +7,9 @@
+ 
+ # If there is a global system configuration file, suck it in.
+ #
+-if [ -r /etc/defaults/periodic.conf ]
++if [ -r /etc/default/periodic.conf ]
+ then
+-    . /etc/defaults/periodic.conf
++    . /etc/default/periodic.conf
+     source_periodic_confs
+ fi
+ 
